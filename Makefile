@@ -4,7 +4,12 @@ build:
 	# Building without context
 	docker build -t ${IMAGE} - < Dockerfile
 
-XORG=-v ${HOME}/.Xauthority:/root/.Xauthority:rw -e DISPLAY --net=host
+# On some guides found on the internet they added also
+#
+#     -v ${HOME}/.Xauthority:/root/.Xauthority:rw
+#
+# but it was not required in my case...
+XORG=-e DISPLAY --net=host
 
 RUN=docker run ${XORG} --rm -it ${IMAGE}
 

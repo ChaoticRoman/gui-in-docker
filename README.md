@@ -8,7 +8,7 @@ make run
 
 Inspecting [`Dockerfile`](Dockerfile), you can see there is not anything special,
 `x11-apps` are installed just to have `xclock` available to test this method. All
-magic is in the Makefile `run` target.
+magic is in the [`Makefile`](Makefile) `run` target.
 
 ## Allowing Docker to communicate with X11 server and related security risks
 
