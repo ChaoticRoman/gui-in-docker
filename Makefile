@@ -1,16 +1,23 @@
+IMAGE=gui-in-docker
+
 build:
-	docker build -t gui-in-docker .
+	# Building without context
+	docker build -t ${IMAGE} - < Dockerfile
 
 XORG=-v ${HOME}/.Xauthority:/root/.Xauthority:rw -e DISPLAY --net=host
 
-RUN=docker run ${XORG} --rm -it gui-in-docker
+RUN=docker run ${XORG} --rm -it ${IMAGE}
 
 # Can pose security risk!
-access-x:
-	xhost + local:docker
+ENABLE=xhost + local:docker
+DISABLE=xhost - local:docker
 
-bash: build access-x
+bash: build
+	${ENABLE}
 	${RUN} bash
+	${DISABLE}
 
-run: build access-x
+run: build
+	${ENABLE}
 	${RUN} xclock
+	${DISABLE}
